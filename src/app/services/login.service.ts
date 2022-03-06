@@ -29,7 +29,7 @@ export class LoginService {
         .post<LoginModel>(environment.loginUrl, entrada)
         .pipe(map(retornoAPI => {
           // Hacer algo
-          console.log("Login OK: " + JSON.stringify(retornoAPI));
+          console.log('Login OK: ' + JSON.stringify(retornoAPI));
           this.loginModelBehaviourSubject.next(retornoAPI);
           localStorage.setItem(LOGIN_KEY, JSON.stringify(retornoAPI));
           return retornoAPI;
@@ -39,6 +39,6 @@ export class LoginService {
   performLogout(): void {
     localStorage.removeItem(LOGIN_KEY);
     this.loginModelBehaviourSubject.next(null);
-    this.route.navigate(["/login"])
+    this.route.navigate(['/login']);
   }
 }
