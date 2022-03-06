@@ -1,3 +1,5 @@
+import { LoginModel } from './model/login.model';
+import { LoginService } from './services/login.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,4 +9,18 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angularTaller';
+
+  usuario!: LoginModel | null;
+
+  constructor(private loginService: LoginService) {
+    loginService.login.subscribe(usuario => this.usuario = usuario);
+  }
+
+  hayUsuario(): boolean{
+    return this.usuario != null;
+  }
+
+  logout(): void {
+    this.loginService.performLogout();
+  }
 }
