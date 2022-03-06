@@ -1,4 +1,8 @@
 <div class="col-md-6 offset-md-3 mt-5">
+    <div class="alert alert-info">
+        Usuario: eve.holt@reqres.in <br>
+        Contraseña: cityslicka
+    </div>
     <form [formGroup]="this.loginForm" (ngSubmit)="submitForm()">
         <div class="form-group">
           <label for="exampleInputEmail1">Email usuario</label>
@@ -28,7 +32,10 @@
                 placeholder="Contraseña">
         </div>
         <div class="invalid-feedback" *ngIf="enviado && this.loginForm.controls.password.errors?.required">¡Tienes que rellenar este campo!</div>
-        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        <button [disabled]="isLoading" type="submit" class="btn btn-primary">
+            <span class="spinner-border spinner-border-sm mr-a" *ngIf="isLoading"></span>
+            Iniciar sesión
+        </button>
         <div *ngIf="errorMsg" class="alert alert-danger mt-3 mb-8">{{errorMsg}}</div>
     </form>
 </div>

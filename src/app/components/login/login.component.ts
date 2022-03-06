@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   enviado: boolean = false;
   errorMsg!: string | null;
+  isLoading: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private loginService: LoginService) {
     this.loginForm = this.formBuilder.group({
@@ -33,12 +34,20 @@ export class LoginComponent implements OnInit {
       return;
 
     let loginModel: LoginModel = new LoginModel(this.loginForm.controls.username.value, this.loginForm.controls.password.value, "");
+
+    //Comienza llamada back
+    this.isLoading = true;
     this.loginService.performLogin(loginModel)
         .subscribe(respuesta => {
           console.log(JSON.stringify(respuesta));
+          this.isLoading = false;
+          this.errorMsg = null;
         }, error => {
           console.log('ERROR: ' + JSON.stringify(error));
-          this.errorMsg = `No se ha podido iniciar sesión (${error.error.error})`;
+          this.errorMsg = `⚠ No se ha podido iniciar sesión (${error.error?.error})`;
+          this.isLoading = false;
+        }, () => {
+          this.isLoading = false;
         });
   }
 
